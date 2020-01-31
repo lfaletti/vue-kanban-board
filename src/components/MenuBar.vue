@@ -1,13 +1,16 @@
 <template>
-    <div class="menubar">
-        <div class="btn-group" role="group" aria-label="Menu Bar">
-            <router-link to="/board" :class="buttonClass('/board')">Board</router-link>
-            <router-link to="/backlog" :class="buttonClass('/backlog')"> Backlog</router-link>
-        </div>
-    </div>
+  <div class="menubar">
+      <div class="btn-group" role="group" aria-label="Menu bar">
+          <div class="row">
+          <router-link to="/board" :class="buttonClass('/board')">Board <i class="fa fa-th-large" aria-hidden="true"></i></router-link>
+          <router-link to="/backlog" :class="buttonClass('/backlog')">Backlog <i class="fa fa-list" aria-hidden="true"></i></router-link>          
+          </div>
+      </div>
+  </div>
 </template>
 
 <script>
+
 export default {
     name: 'MenuBar',    
     methods: {
@@ -17,7 +20,7 @@ export default {
                 'btn-primary': this.$route.path === path,
                 'btn-secondary': this.$route.path !== path
             };
-        }
+        },       
     }
 };
 </script>

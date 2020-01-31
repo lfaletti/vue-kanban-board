@@ -2,7 +2,7 @@
 <template>
     <div class="add-item">
         <form action="#" method="post" v-on:submit.prevent="submitForm">
-            <input type="text" v-model="itemText" placeholder="Add something to the Backlog" />
+            <input type="text" v-model="itemText" placeholder="Add something to the backlog">
         </form>
     </div>
 </template>
@@ -18,10 +18,7 @@ export default {
     methods: {
         submitForm() {
             if (this.itemText) {
-                this.$store.commit('addItem', {
-                    text: this.itemText,
-                });
-
+                this.$store.dispatch('postItemAction', { text: this.itemText, type: "Todo" } );
                 this.itemText = '';
             }
         },
@@ -42,5 +39,9 @@ export default {
 }
 .add-item input:focus {
   border-bottom-color: rgba(255, 255, 255, 1);
+}
+
+.add-item {
+  margin: 30px 0;
 }
 </style>

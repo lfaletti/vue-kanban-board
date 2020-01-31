@@ -3,7 +3,7 @@
         <div class="card-block">
             <h5 class="card-title">
                 <span class="text-muted">#{{item.id}}</span>
-                {{item.text}}
+                {{item.text}}                
             </h5>
         </div>
     </div>

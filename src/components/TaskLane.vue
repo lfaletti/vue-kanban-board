@@ -2,8 +2,8 @@
     <div class="card">
         <h3 class="card-header">{{title}}</h3>
         <div class="card-body">
-         <draggable v-model="draggables" :options="{ group: 'default' }">
-              <div v-for="item in items" :key="item.id">
+         <draggable v-model="draggables" @change="change" :options="{ group: 'default' }">             
+              <div v-for="item in laneItems" :key="item.id">
                 <item :item="item"></item>
              </div>
     </draggable>
@@ -20,26 +20,38 @@ import TaskLaneItem from './TaskLaneItem';
 
 export default {
     name: 'TaskLane',
-    props: ['items', 'title', 'id'],
+    props: ['laneItems', 'title', 'laneId'],
     components: {
         item: TaskLaneItem,
         draggable: Draggable
     },
+    methods: {
+        change(e) {
+            //console.log(e);
+            if (e.added) {
+                var addedElement = e.added.element;
+                var modifiedItem = { id: addedElement.id , text: addedElement.text, type: this.laneId };
+
+                this.$store.dispatch('updateItemAction', modifiedItem );
+            }
+        }
+    },
     computed: {
         itemCount() {
-            if (!this.items) return '';
-            if (this.items.length === 1) return '1 task';
-            return `${this.items.length} tasks`;
+            if (!this.laneItems) return '';
+            if (this.laneItems.length === 1) return '1 task';
+            return `${this.laneItems.length} tasks`;
         },
        draggables: {
             get() {
-            return this.items;
+            return this.laneItems;
             },
-            set(items) {
-            this.$store.commit('updateItems', {
-                items,
-                id: this.id,
-            });
+            set(laneItems) {        
+                this.$store.commit('updateItem', {
+                laneItems: laneItems,
+                laneId: this.laneId
+        });               
+             
         },
     },          
     }
